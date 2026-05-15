@@ -1,0 +1,218 @@
+const mongoose = require("mongoose");
+
+
+// ======================================================
+// BANK DETAILS SCHEMA
+// ======================================================
+
+const bankDetailsSchema =
+  new mongoose.Schema({
+
+    accountHolderName: {
+      type: String,
+      default: "",
+    },
+
+    bankName: {
+      type: String,
+      default: "",
+    },
+
+    accountNumber: {
+      type: String,
+      default: "",
+    },
+
+    ifscCode: {
+      type: String,
+      default: "",
+    },
+
+    accountType: {
+      type: String,
+      default: "",
+    },
+
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+  });
+
+
+// ======================================================
+// INVENTORY SETTINGS SCHEMA
+// ======================================================
+
+const inventorySettingsSchema =
+  new mongoose.Schema({
+
+    lowStockAlert: {
+      type: Boolean,
+      default: false,
+    },
+
+    expiryReminders: {
+      type: Boolean,
+      default: false,
+    },
+
+    showOutOfStock: {
+      type: Boolean,
+      default: false,
+    },
+
+    autoSyncPOS: {
+      type: Boolean,
+      default: false,
+    },
+
+    minStockLevel: {
+      type: Number,
+      default: 0,
+    },
+
+    gstRate: {
+      type: Number,
+      default: 0,
+    },
+
+  });
+
+
+// ======================================================
+// STORE PERFORMANCE SCHEMA
+// ======================================================
+
+const storePerformanceSchema =
+  new mongoose.Schema({
+
+    totalRevenue: {
+      type: String,
+      default: "",
+    },
+
+    growthRate: {
+      type: String,
+      default: "",
+    },
+
+    orderSuccess: {
+      type: Number,
+      default: 0,
+    },
+
+    patientSatisfaction: {
+      type: Number,
+      default: 0,
+    },
+
+    inventoryTurnover: {
+      type: Number,
+      default: 0,
+    },
+
+    totalOrders: {
+      type: Number,
+      default: 0,
+    },
+
+    activePatients: {
+      type: Number,
+      default: 0,
+    },
+
+    averageRating: {
+      type: Number,
+      default: 0,
+    },
+
+    refunds: {
+      type: String,
+      default: "",
+    },
+
+  });
+
+
+// ======================================================
+// PHARMACY USER SCHEMA
+// ======================================================
+
+const pharmacyUserSchema =
+  new mongoose.Schema(
+
+    {
+
+      // BASIC INFO
+      name: {
+        type: String,
+        required: true,
+      },
+
+      email: {
+        type: String,
+        required: true,
+        unique: true,
+      },
+
+      phone: {
+        type: String,
+        required: true,
+      },
+
+      password: {
+        type: String,
+        required: true,
+      },
+
+
+      // PROFILE
+      licenseNumber: {
+        type: String,
+        default: "",
+      },
+
+      rating: {
+        type: String,
+        default: "",
+      },
+
+      totalOrders: {
+        type: String,
+        default: "",
+      },
+
+      reliability: {
+        type: String,
+        default: "",
+      },
+
+
+      // STORE PERFORMANCE
+      storePerformance:
+        storePerformanceSchema,
+
+
+      // INVENTORY SETTINGS
+      inventorySettings:
+        inventorySettingsSchema,
+
+
+      // BANK DETAILS
+      bankDetails:
+        bankDetailsSchema,
+
+    },
+
+    {
+      timestamps: true,
+    }
+
+  );
+
+module.exports = mongoose.model(
+  "PharmacyUser",
+  pharmacyUserSchema
+);
