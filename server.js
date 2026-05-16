@@ -52,6 +52,17 @@ app.use(
     "./routes/labBookingManagementRoutes"
   )
 );
+// server.js
+
+const labAvailabilityRoutes =
+require("./routes/labAvailabilityRoutes");
+
+
+// ROUTES
+app.use(
+  "/api/lab-availability",
+  labAvailabilityRoutes
+);
 // ======================================================
 // PHARMACY ORDER ROUTES
 // ======================================================
@@ -77,6 +88,17 @@ app.use(
   require(
     "./routes/pharmacySettingsRoutes"
   )
+);
+// server.js
+
+const bookingLabRoutes =
+require(
+  "./routes/bookingLabRoutes"
+);
+
+app.use(
+  "/api/booking-lab",
+  bookingLabRoutes
 );
 // ======================================================
 // PHARMACY PRODUCT ROUTES
