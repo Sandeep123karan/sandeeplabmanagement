@@ -22,10 +22,13 @@ const protect = async (
     // =====================================
 
     if (
+
       req.headers.authorization &&
+
       req.headers.authorization.startsWith(
         "Bearer"
       )
+
     ) {
 
       token =
@@ -35,6 +38,7 @@ const protect = async (
 
     }
 
+
     // =====================================
     // TOKEN NOT FOUND
     // =====================================
@@ -42,20 +46,30 @@ const protect = async (
     if (!token) {
 
       return res.status(401).json({
+
         success: false,
-        message: "Token not found",
+
+        message:
+          "Token not found",
+
       });
 
     }
+
 
     // =====================================
     // VERIFY TOKEN
     // =====================================
 
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET
-    );
+    const decoded =
+      jwt.verify(
+
+        token,
+
+        process.env.JWT_SECRET
+
+      );
+
 
     // =====================================
     // SAVE USER DATA
@@ -68,8 +82,12 @@ const protect = async (
   } catch (error) {
 
     return res.status(401).json({
+
       success: false,
-      message: "Invalid token",
+
+      message:
+        "Invalid token",
+
     });
 
   }
@@ -88,12 +106,16 @@ const userOnly = (
 ) => {
 
   if (
-    req.user.module !== "user"
+    req.user.role !== "user"
   ) {
 
     return res.status(403).json({
+
       success: false,
-      message: "User access only",
+
+      message:
+        "User access only",
+
     });
 
   }
@@ -114,12 +136,16 @@ const doctorOnly = (
 ) => {
 
   if (
-    req.user.module !== "doctor"
+    req.user.role !== "doctor"
   ) {
 
     return res.status(403).json({
+
       success: false,
-      message: "Doctor access only",
+
+      message:
+        "Doctor access only",
+
     });
 
   }
@@ -140,14 +166,17 @@ const laboratoryOnly = (
 ) => {
 
   if (
-    req.user.module !==
+    req.user.role !==
     "laboratory"
   ) {
 
     return res.status(403).json({
+
       success: false,
+
       message:
         "Laboratory access only",
+
     });
 
   }
@@ -168,14 +197,17 @@ const pharmacyOnly = (
 ) => {
 
   if (
-    req.user.module !==
+    req.user.role !==
     "pharmacy"
   ) {
 
     return res.status(403).json({
+
       success: false,
+
       message:
         "Pharmacy access only",
+
     });
 
   }
@@ -196,13 +228,16 @@ const adminOnly = (
 ) => {
 
   if (
-    req.user.module !== "admin"
+    req.user.role !== "admin"
   ) {
 
     return res.status(403).json({
+
       success: false,
+
       message:
         "Admin access only",
+
     });
 
   }
@@ -217,10 +252,17 @@ const adminOnly = (
 // ==========================================
 
 module.exports = {
+
   protect,
+
   userOnly,
+
   doctorOnly,
+
   laboratoryOnly,
+
   pharmacyOnly,
+
   adminOnly,
+
 };

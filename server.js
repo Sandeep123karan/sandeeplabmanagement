@@ -53,6 +53,16 @@ app.use(
   )
 );
 // ======================================================
+// PHARMACY ORDER ROUTES
+// ======================================================
+
+app.use(
+  "/api/pharmacy-orders",
+  require(
+    "./routes/pharmacyOrderRoutes"
+  )
+);
+// ======================================================
 // LAB PERFORMANCE ROUTES
 // ======================================================
 
@@ -60,6 +70,28 @@ app.use(
   "/api/lab-performance",
   require(
     "./routes/labPerformanceRoutes"
+  )
+);
+app.use(
+  "/api/pharmacy-settings",
+  require(
+    "./routes/pharmacySettingsRoutes"
+  )
+);
+// ======================================================
+// PHARMACY PRODUCT ROUTES
+// ======================================================
+
+app.use(
+  "/api/pharmacy-products",
+  require(
+    "./routes/pharmacyProductRoutes"
+  )
+);
+app.use(
+  "/api/pickup-orders",
+  require(
+    "./routes/pickupOrderRoutes"
   )
 );
 // ======================================================

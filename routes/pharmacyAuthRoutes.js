@@ -10,33 +10,41 @@ const {
 
   loginPharmacy,
 
+  getAllPharmacies,
+
+  getPharmacyProfile,
+
 } = require(
   "../controllers/pharmacyAuthController"
 );
 
 
-// ======================================================
-// REGISTER PHARMACY
-// ======================================================
-
+// REGISTER
 router.post(
   "/register",
   registerPharmacy
 );
 
 
-// ======================================================
-// LOGIN PHARMACY
-// ======================================================
-
+// LOGIN
 router.post(
   "/login",
   loginPharmacy
 );
 
 
-// ======================================================
-// EXPORT ROUTER
-// ======================================================
+// GET ALL
+router.get(
+  "/all",
+  getAllPharmacies
+);
+
+
+// GET PROFILE
+router.get(
+  "/profile/:id",
+  getPharmacyProfile
+);
+
 
 module.exports = router;

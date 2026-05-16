@@ -20,7 +20,7 @@ const registerPharmacy =
 
       const {
 
-        // BASIC
+        // BASIC INFO
         name,
 
         email,
@@ -83,7 +83,7 @@ const registerPharmacy =
 
 
       // ==================================================
-      // CHECK USER
+      // CHECK EXISTING PHARMACY
       // ==================================================
 
       const existingUser =
@@ -250,7 +250,7 @@ const loginPharmacy =
 
 
       // ==================================================
-      // FIND USER
+      // FIND PHARMACY
       // ==================================================
 
       const pharmacy =
@@ -355,6 +355,100 @@ const loginPharmacy =
 
 
 // ======================================================
+// GET ALL PHARMACIES
+// ======================================================
+
+const getAllPharmacies =
+  async (req, res) => {
+
+    try {
+
+      const pharmacies =
+        await PharmacyUser.find()
+
+        .sort({
+          createdAt: -1,
+        });
+
+      res.status(200).json({
+
+        success: true,
+
+        totalPharmacies:
+          pharmacies.length,
+
+        data: pharmacies,
+
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+
+        success: false,
+
+        message:
+          error.message,
+
+      });
+
+    }
+
+};
+
+
+// ======================================================
+// GET SINGLE PHARMACY PROFILE
+// ======================================================
+
+const getPharmacyProfile =
+  async (req, res) => {
+
+    try {
+
+      const pharmacy =
+        await PharmacyUser.findById(
+          req.params.id
+        );
+
+      if (!pharmacy) {
+
+        return res.status(404).json({
+
+          success: false,
+
+          message:
+            "Pharmacy not found",
+
+        });
+
+      }
+
+      res.status(200).json({
+
+        success: true,
+
+        data: pharmacy,
+
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+
+        success: false,
+
+        message:
+          error.message,
+
+      });
+
+    }
+
+};
+
+
+// ======================================================
 // EXPORTS
 // ======================================================
 
@@ -363,5 +457,9 @@ module.exports = {
   registerPharmacy,
 
   loginPharmacy,
+
+  getAllPharmacies,
+
+  getPharmacyProfile,
 
 };
