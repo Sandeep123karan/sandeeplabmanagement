@@ -5,9 +5,7 @@ const mongoose = require("mongoose");
 const labBookingSchema =
   new mongoose.Schema(
     {
-      // =====================================
-      // USER
-      // =====================================
+     
 
       user: {
         type:
@@ -18,9 +16,7 @@ const labBookingSchema =
         required: true,
       },
 
-      // =====================================
-      // TEST DETAILS
-      // =====================================
+   
 
       testName: {
         type: String,
@@ -32,9 +28,7 @@ const labBookingSchema =
         required: true,
       },
 
-      // =====================================
-      // STATUS
-      // =====================================
+   
 
       status: {
         type: String,
@@ -50,9 +44,7 @@ const labBookingSchema =
         default: "Pending",
       },
 
-      // =====================================
-      // SAMPLE COLLECTION
-      // =====================================
+    
 
       sampleCollectionType: {
         type: String,
@@ -65,26 +57,20 @@ const labBookingSchema =
         default: "Home",
       },
 
-      // =====================================
-      // DATE
-      // =====================================
+    
 
       scheduledDate: {
         type: Date,
       },
 
-      // =====================================
-      // REPORT
-      // =====================================
+    
 
       reportUrl: {
         type: String,
         default: "",
       },
 
-      // =====================================
-      // PAYMENT
-      // =====================================
+     
 
       paymentMethod: {
         type: String,
@@ -109,9 +95,6 @@ const labBookingSchema =
         default: "PENDING",
       },
 
-      // =====================================
-      // RAZORPAY
-      // =====================================
 
       razorpayOrderId: {
         type: String,
@@ -128,9 +111,7 @@ const labBookingSchema =
         default: "",
       },
 
-      // =====================================
-      // COMPLETED
-      // =====================================
+ 
 
       isCompleted: {
         type: Boolean,

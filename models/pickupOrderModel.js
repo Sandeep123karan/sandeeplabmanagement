@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 
 
-// ======================================================
-// PICKUP ITEM SCHEMA
-// ======================================================
 
 const pickupItemSchema =
   new mongoose.Schema({
@@ -31,9 +28,6 @@ const pickupItemSchema =
   });
 
 
-// ======================================================
-// PICKUP ORDER SCHEMA
-// ======================================================
 
 const pickupOrderSchema =
   new mongoose.Schema(

@@ -130,6 +130,15 @@ app.use(
   "/api/schedules",
   require("./routes/scheduleRoutes")
 );
+app.use(
+
+  "/api/pet-care-products",
+
+  require(
+    "./routes/petCareProductRoutes"
+  )
+
+);
 
 const PORT = process.env.PORT || 5000;
 

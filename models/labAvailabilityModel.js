@@ -3,18 +3,14 @@
 const mongoose = require("mongoose");
 
 
-// ======================================================
-// LAB AVAILABILITY SCHEMA
-// ======================================================
+
 
 const labAvailabilitySchema =
   new mongoose.Schema(
 
     {
 
-      // ==========================================
-      // LABORATORY ID
-      // ==========================================
+ 
 
       laboratoryId: {
 
@@ -30,9 +26,7 @@ const labAvailabilitySchema =
       },
 
 
-      // ==========================================
-      // ONLINE / OFFLINE
-      // ==========================================
+  
 
       is_online: {
 
@@ -53,9 +47,7 @@ const labAvailabilitySchema =
   );
 
 
-// ======================================================
-// SAFE EXPORT MODEL
-// ======================================================
+
 
 const LabAvailability =
   mongoose.models.LabAvailability ||

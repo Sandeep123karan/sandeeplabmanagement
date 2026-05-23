@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
 
-// ======================================================
-// TOP TEST SCHEMA
-// ======================================================
+
 
 const performedTestSchema =
   new mongoose.Schema({
@@ -26,9 +24,7 @@ const performedTestSchema =
   });
 
 
-// ======================================================
-// LAB PERFORMANCE SCHEMA
-// ======================================================
+
 
 const labPerformanceSchema =
   new mongoose.Schema(
@@ -68,9 +64,7 @@ const labPerformanceSchema =
   );
 
 
-// ======================================================
-// EXPORT MODEL
-// ======================================================
+
 
 module.exports = mongoose.model(
   "LabPerformance",

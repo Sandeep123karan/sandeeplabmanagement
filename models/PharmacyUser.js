@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
 
-// ======================================================
-// BANK DETAILS SCHEMA
-// ======================================================
+
 
 const bankDetailsSchema =
   new mongoose.Schema({
@@ -41,9 +39,7 @@ const bankDetailsSchema =
   });
 
 
-// ======================================================
-// INVENTORY SETTINGS SCHEMA
-// ======================================================
+
 
 const inventorySettingsSchema =
   new mongoose.Schema({
@@ -81,9 +77,7 @@ const inventorySettingsSchema =
   });
 
 
-// ======================================================
-// STORE PERFORMANCE SCHEMA
-// ======================================================
+
 
 const storePerformanceSchema =
   new mongoose.Schema({
@@ -136,9 +130,7 @@ const storePerformanceSchema =
   });
 
 
-// ======================================================
-// PHARMACY USER SCHEMA
-// ======================================================
+
 
 const pharmacyUserSchema =
   new mongoose.Schema(

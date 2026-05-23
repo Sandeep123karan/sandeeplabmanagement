@@ -1,5 +1,5 @@
-const LabTestOrder = require(
-  "../models/labTestOrderModel"
+const LabBooking = require(
+  "../models/labBookingModel"
 );
 
 // IMPORT USER MODEL
@@ -16,7 +16,7 @@ exports.getAllLabBookings =
     try {
 
       const bookings =
-        await LabTestOrder.find()
+        await LabBooking.find()
 
           .populate({
             path: "user",
@@ -90,7 +90,7 @@ exports.updateLabBookingStatus =
 
       // FIND BOOKING
       const booking =
-        await LabTestOrder.findById(
+        await LabBooking.findById(
           req.params.id
         );
 

@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
 
-// ======================================================
-// LICENSE SCHEMA
-// ======================================================
+
 
 const licenseSchema =
   new mongoose.Schema({
@@ -17,9 +15,7 @@ const licenseSchema =
   });
 
 
-// ======================================================
-// LABORATORY USER SCHEMA
-// ======================================================
+
 
 const laboratoryUserSchema =
   new mongoose.Schema(
@@ -123,7 +119,7 @@ const laboratoryUserSchema =
       },
 
 
-      // LICENSES
+      
       licenses: [licenseSchema],
 
     },

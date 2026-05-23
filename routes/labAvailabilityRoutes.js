@@ -1,66 +1,113 @@
-// routes/labAvailabilityRoutes.js
+// // routes/labAvailabilityRoutes.js
+
+// const express = require("express");
+
+// const router = express.Router();
+
+
+// // ======================================================
+// // CONTROLLERS
+// // ======================================================
+
+// const {
+
+//   updateLabAvailability,
+
+//   getLabAvailability,
+
+// } = require(
+//   "../controllers/labAvailabilityController"
+// );
+
+
+// // ======================================================
+// // MIDDLEWARE
+// // ======================================================
+
+// const {
+
+//   protect,
+
+//   laboratoryOnly,
+
+// } = require(
+//   "../middleware/authMiddleware"
+// );
+
+
+// // ======================================================
+// // UPDATE LAB AVAILABILITY
+// // ======================================================
+
+// router.put(
+//   "/update",
+//   protect,
+//   laboratoryOnly,
+//   updateLabAvailability
+// );
+
+
+// // ======================================================
+// // GET LAB AVAILABILITY
+// // ======================================================
+
+// router.get(
+//   "/get",
+//   protect,
+//   laboratoryOnly,
+//   getLabAvailability
+// );
+
+
+// // ======================================================
+// // EXPORT ROUTER
+// // ======================================================
+
+// module.exports = router;
+
 
 const express = require("express");
 
 const router = express.Router();
 
-
-// ======================================================
-// CONTROLLERS
-// ======================================================
-
 const {
-
-  updateLabAvailability,
-
-  getLabAvailability,
-
+  createDiagnosticTest,
+  getAllDiagnosticTests,
+  getSingleDiagnosticTest,
+  updateDiagnosticTest,
+  deleteDiagnosticTest,
 } = require(
-  "../controllers/labAvailabilityController"
+  "../controllers/diagnosticTestController"
 );
 
-
-// ======================================================
-// MIDDLEWARE
-// ======================================================
-
-const {
-
-  protect,
-
-  laboratoryOnly,
-
-} = require(
-  "../middleware/authMiddleware"
+// CREATE
+router.post(
+  "/create",
+  createDiagnosticTest
 );
 
-
-// ======================================================
-// UPDATE LAB AVAILABILITY
-// ======================================================
-
-router.put(
-  "/update",
-  protect,
-  laboratoryOnly,
-  updateLabAvailability
-);
-
-
-// ======================================================
-// GET LAB AVAILABILITY
-// ======================================================
-
+// GET ALL
 router.get(
-  "/get",
-  protect,
-  laboratoryOnly,
-  getLabAvailability
+  "/all",
+  getAllDiagnosticTests
 );
 
+// GET SINGLE
+router.get(
+  "/:id",
+  getSingleDiagnosticTest
+);
 
-// ======================================================
-// EXPORT ROUTER
-// ======================================================
+// UPDATE
+router.put(
+  "/update/:id",
+  updateDiagnosticTest
+);
+
+// DELETE
+router.delete(
+  "/delete/:id",
+  deleteDiagnosticTest
+);
 
 module.exports = router;
