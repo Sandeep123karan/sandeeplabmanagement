@@ -139,6 +139,20 @@ app.use(
   )
 
 );
+// ================================
+// server.js / app.js
+// ================================
+
+
+app.use(
+
+  "/api/management-pet-orders",
+
+  require(
+    "./routes/managementPetOrderRoutes"
+  )
+
+);
 
 const PORT = process.env.PORT || 5000;
 
