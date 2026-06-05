@@ -11,6 +11,7 @@ const {
   loginLaboratory,
 
   getLaboratoryProfile,
+   getAllLaboratories,
 
 } = require(
   "../controllers/laboratoryAuthController"
@@ -21,6 +22,7 @@ const {
   protect,
 
   laboratoryOnly,
+  adminOnly,
 
 } = require(
   "../middleware/authMiddleware"
@@ -45,7 +47,15 @@ router.post(
   "/login",
   loginLaboratory
 );
+// ======================================================
+// GET ALL LABORATORIES
+// ======================================================
 
+router.get(
+  "/all-laboratories",
+  
+  getAllLaboratories
+);
 
 // ======================================================
 // GET LABORATORY PROFILE

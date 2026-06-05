@@ -131,7 +131,7 @@ router.get(
   "/:id",
   protect,
   pharmacyOnly,
-  getSinglePetCareProduct
+  getSinglePetCareProduct 
 );
 
 

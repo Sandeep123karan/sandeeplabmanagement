@@ -13,7 +13,7 @@ const scheduleSchema =
 
         required: true,
 
-        enum: [
+        enum: [ 
 
           "Monday",
 

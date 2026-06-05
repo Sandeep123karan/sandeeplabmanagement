@@ -419,6 +419,47 @@ const getLaboratoryProfile =
     }
 
 };
+// ======================================================
+// GET ALL LABORATORIES
+// ======================================================
+
+const getAllLaboratories =
+  async (req, res) => {
+
+    try {
+
+      const laboratories =
+        await LaboratoryUser.find()
+          .select("-password")
+          .sort({
+            createdAt: -1,
+          });
+
+      res.status(200).json({
+
+        success: true,
+
+        totalLaboratories:
+          laboratories.length,
+
+        laboratories,
+
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+
+        success: false,
+
+        message:
+          error.message,
+
+      });
+
+    }
+
+};
 
 
 
@@ -433,5 +474,6 @@ module.exports = {
   loginLaboratory,
 
   getLaboratoryProfile,
+   getAllLaboratories,
 
 };

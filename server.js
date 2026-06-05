@@ -100,6 +100,15 @@ app.use(
   "/api/booking-lab",
   bookingLabRoutes
 );
+app.use(
+
+  "/api/reception-auth",
+
+  require(
+    "./routes/receptionAuthRoutes"
+  )
+
+);
 // ======================================================
 // PHARMACY PRODUCT ROUTES
 // ======================================================
@@ -138,6 +147,13 @@ app.use(
     "./routes/petCareProductRoutes"
   )
 
+);    
+const appointmentRoutes =
+  require("./routes/appointmentRoutes");
+
+app.use(
+  "/api/appointments",
+  appointmentRoutes
 );
 // ================================
 // server.js / app.js

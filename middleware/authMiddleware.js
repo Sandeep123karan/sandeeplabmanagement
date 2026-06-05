@@ -1,255 +1,589 @@
+// // middleware/authMiddleware.js
+
+// const jwt = require("jsonwebtoken");
+
+
+// // ==========================================
+// // PROTECT MIDDLEWARE
+// // ==========================================
+
+// const protect = async (
+//   req,
+//   res,
+//   next
+// ) => {
+
+//   try {
+
+//     let token;
+
+//     // =====================================
+//     // GET TOKEN
+//     // =====================================
+
+//     if (
+
+//       req.headers.authorization &&
+
+//       req.headers.authorization.startsWith(
+//         "Bearer"
+//       )
+
+//     ) {
+
+//       token =
+//         req.headers.authorization.split(
+//           " "
+//         )[1];
+
+//     }
+
+
+//     // =====================================
+//     // TOKEN NOT FOUND
+//     // =====================================
+
+//     if (!token) {
+
+//       return res.status(401).json({
+
+//         success: false,
+
+//         message:
+//           "Token not found",
+
+//       });
+
+//     }
+
+
+//     // =====================================
+//     // VERIFY TOKEN
+//     // =====================================
+
+//     const decoded =
+//       jwt.verify(
+
+//         token,
+
+//         process.env.JWT_SECRET
+
+//       );
+
+
+//     // =====================================
+//     // SAVE USER DATA
+//     // =====================================
+
+//     req.user = decoded;
+
+//     next();
+
+//   } catch (error) {
+
+//     return res.status(401).json({
+
+//       success: false,
+
+//       message:
+//         "Invalid token",
+
+//     });
+
+//   }
+
+// };
+
+
+// // ==========================================
+// // USER ONLY
+// // ==========================================
+
+// const userOnly = (
+//   req,
+//   res,
+//   next
+// ) => {
+
+//   if (
+//     req.user.role !== "user"
+//   ) {
+
+//     return res.status(403).json({
+
+//       success: false,
+
+//       message:
+//         "User access only",
+
+//     });
+
+//   }
+
+//   next();
+
+// };
+
+
+// // ==========================================
+// // DOCTOR ONLY
+// // ==========================================
+
+// const doctorOnly = (
+//   req,
+//   res,
+//   next
+// ) => {
+
+//   if (
+//     req.user.role !== "doctor"
+//   ) {
+
+//     return res.status(403).json({
+
+//       success: false,
+
+//       message:
+//         "Doctor access only",
+
+//     });
+
+//   }
+
+//   next();
+
+// };
+// // ==========================================
+// // RECEPTION ONLY
+// // ==========================================
+
+// const receptionOnly = (
+//   req,
+//   res,
+//   next
+// ) => {
+
+//   if (
+//     req.user.role !==
+//     "reception"
+//   ) {
+
+//     return res.status(403).json({
+
+//       success: false,
+
+//       message:
+//         "Reception access only",
+
+//     });
+
+//   }
+
+//   next();
+
+// };
+
+
+// // ==========================================
+// // LABORATORY ONLY
+// // ==========================================
+
+// const laboratoryOnly = (
+//   req,
+//   res,
+//   next
+// ) => {
+
+//   if (
+//     req.user.role !==
+//     "laboratory"
+//   ) {
+
+//     return res.status(403).json({
+
+//       success: false,
+
+//       message:
+//         "Laboratory access only",
+
+//     });
+
+//   }
+
+//   next();
+
+// };
+
+
+// // ==========================================
+// // PHARMACY ONLY
+// // ==========================================
+
+// const pharmacyOnly = (
+//   req,
+//   res,
+//   next
+// ) => {
+
+//   if (
+//     req.user.role !==
+//     "pharmacy"
+//   ) {
+
+//     return res.status(403).json({
+
+//       success: false,
+
+//       message:
+//         "Pharmacy access only",
+
+//     });
+
+//   }
+
+//   next();
+
+// };
+
+
+// // ==========================================
+// // ADMIN ONLY
+// // ==========================================
+
+// const adminOnly = (
+//   req,
+//   res,
+//   next
+// ) => {
+
+//   if (
+//     req.user.role !== "admin"
+//   ) {
+
+//     return res.status(403).json({
+
+//       success: false,
+
+//       message:
+//         "Admin access only",
+
+//     });
+
+//   }
+
+//   next();
+
+// };
+
+
+// // ==========================================
+// // EXPORTS
+// // ==========================================
+
+// module.exports = {
+
+//   protect,
+
+//   userOnly,
+
+//   doctorOnly,
+
+//   laboratoryOnly,
+
+//   pharmacyOnly,
+
+//   adminOnly,
+//     receptionOnly,
+
+// };
+
+
 // middleware/authMiddleware.js
 
-const jwt = require("jsonwebtoken");
+const jwt =
+  require("jsonwebtoken");
 
+/* ==========================================
+   PROTECT MIDDLEWARE
+========================================== */
 
-// ==========================================
-// PROTECT MIDDLEWARE
-// ==========================================
+const protect =
+  async (
+    req,
+    res,
+    next
+  ) => {
 
-const protect = async (
-  req,
-  res,
-  next
-) => {
+    try {
 
-  try {
+      let token;
 
-    let token;
+      /* =====================================
+         GET TOKEN
+      ===================================== */
 
-    // =====================================
-    // GET TOKEN
-    // =====================================
+      if (
 
-    if (
+        req.headers.authorization &&
 
-      req.headers.authorization &&
+        req.headers.authorization.startsWith(
+          "Bearer"
+        )
 
-      req.headers.authorization.startsWith(
-        "Bearer"
-      )
+      ) {
 
-    ) {
+        token =
+          req.headers.authorization.split(
+            " "
+          )[1];
 
-      token =
-        req.headers.authorization.split(
-          " "
-        )[1];
+      }
 
-    }
+      /* =====================================
+         TOKEN NOT FOUND
+      ===================================== */
 
+      if (!token) {
 
-    // =====================================
-    // TOKEN NOT FOUND
-    // =====================================
+        return res.status(401).json({
 
-    if (!token) {
+          success: false,
+
+          message:
+            "Token not found",
+
+        });
+
+      }
+
+      /* =====================================
+         VERIFY TOKEN
+      ===================================== */
+
+      const decoded =
+        jwt.verify(
+
+          token,
+
+          process.env.JWT_SECRET
+
+        );
+
+      /* =====================================
+         SAVE USER DATA
+      ===================================== */
+
+      req.user =
+        decoded;
+
+      next();
+
+    } catch (error) {
+
+      console.log(error);
 
       return res.status(401).json({
 
         success: false,
 
         message:
-          "Token not found",
+          "Invalid token",
 
       });
 
     }
 
+  };
 
-    // =====================================
-    // VERIFY TOKEN
-    // =====================================
+/* ==========================================
+   USER ONLY
+========================================== */
 
-    const decoded =
-      jwt.verify(
+const userOnly =
+  (
+    req,
+    res,
+    next
+  ) => {
 
-        token,
+    if (
+      req.user.role !==
+      "user"
+    ) {
 
-        process.env.JWT_SECRET
+      return res.status(403).json({
 
-      );
+        success: false,
 
+        message:
+          "User access only",
 
-    // =====================================
-    // SAVE USER DATA
-    // =====================================
+      });
 
-    req.user = decoded;
+    }
 
     next();
 
-  } catch (error) {
+  };
 
-    return res.status(401).json({
+/* ==========================================
+   DOCTOR ONLY
+========================================== */
 
-      success: false,
+const doctorOnly =
+  (
+    req,
+    res,
+    next
+  ) => {
 
-      message:
-        "Invalid token",
+    if (
+      req.user.role !==
+      "doctor"
+    ) {
 
-    });
+      return res.status(403).json({
 
-  }
+        success: false,
 
-};
+        message:
+          "Doctor access only",
 
+      });
 
-// ==========================================
-// USER ONLY
-// ==========================================
+    }
 
-const userOnly = (
-  req,
-  res,
-  next
-) => {
+    next();
 
-  if (
-    req.user.role !== "user"
-  ) {
+  };
 
-    return res.status(403).json({
+/* ==========================================
+   RECEPTION ONLY
+========================================== */
 
-      success: false,
+const receptionOnly =
+  (
+    req,
+    res,
+    next
+  ) => {
 
-      message:
-        "User access only",
+    if (
+      req.user.role !==
+      "reception"
+    ) {
 
-    });
+      return res.status(403).json({
 
-  }
+        success: false,
 
-  next();
+        message:
+          "Reception access only",
 
-};
+      });
 
+    }
 
-// ==========================================
-// DOCTOR ONLY
-// ==========================================
+    next();
 
-const doctorOnly = (
-  req,
-  res,
-  next
-) => {
+  };
 
-  if (
-    req.user.role !== "doctor"
-  ) {
+/* ==========================================
+   LABORATORY ONLY
+========================================== */
 
-    return res.status(403).json({
+const laboratoryOnly =
+  (
+    req,
+    res,
+    next
+  ) => {
 
-      success: false,
+    if (
+      req.user.role !==
+      "laboratory"
+    ) {
 
-      message:
-        "Doctor access only",
+      return res.status(403).json({
 
-    });
+        success: false,
 
-  }
+        message:
+          "Laboratory access only",
 
-  next();
+      });
 
-};
+    }
 
+    next();
 
-// ==========================================
-// LABORATORY ONLY
-// ==========================================
+  };
 
-const laboratoryOnly = (
-  req,
-  res,
-  next
-) => {
+/* ==========================================
+   PHARMACY ONLY
+========================================== */
 
-  if (
-    req.user.role !==
-    "laboratory"
-  ) {
+const pharmacyOnly =
+  (
+    req,
+    res,
+    next
+  ) => {
 
-    return res.status(403).json({
+    if (
+      req.user.role !==
+      "pharmacy"
+    ) {
 
-      success: false,
+      return res.status(403).json({
 
-      message:
-        "Laboratory access only",
+        success: false,
 
-    });
+        message:
+          "Pharmacy access only",
 
-  }
+      });
 
-  next();
+    }
 
-};
+    next();
 
+  };
 
-// ==========================================
-// PHARMACY ONLY
-// ==========================================
+/* ==========================================
+   ADMIN ONLY
+========================================== */
 
-const pharmacyOnly = (
-  req,
-  res,
-  next
-) => {
+const adminOnly =
+  (
+    req,
+    res,
+    next
+  ) => {
 
-  if (
-    req.user.role !==
-    "pharmacy"
-  ) {
+    if (
+      req.user.role !==
+      "admin"
+    ) {
 
-    return res.status(403).json({
+      return res.status(403).json({
 
-      success: false,
+        success: false,
 
-      message:
-        "Pharmacy access only",
+        message:
+          "Admin access only",
 
-    });
+      });
 
-  }
+    }
 
-  next();
+    next();
 
-};
+  };
 
-
-// ==========================================
-// ADMIN ONLY
-// ==========================================
-
-const adminOnly = (
-  req,
-  res,
-  next
-) => {
-
-  if (
-    req.user.role !== "admin"
-  ) {
-
-    return res.status(403).json({
-
-      success: false,
-
-      message:
-        "Admin access only",
-
-    });
-
-  }
-
-  next();
-
-};
-
-
-// ==========================================
-// EXPORTS
-// ==========================================
+/* ==========================================
+   EXPORTS
+========================================== */
 
 module.exports = {
 
@@ -258,6 +592,8 @@ module.exports = {
   userOnly,
 
   doctorOnly,
+
+  receptionOnly,
 
   laboratoryOnly,
 
