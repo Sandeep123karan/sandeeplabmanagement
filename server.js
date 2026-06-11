@@ -52,6 +52,13 @@ app.use(
     "./routes/labBookingManagementRoutes"
   )
 );
+const billingRoutes =
+  require("./routes/billingRoutes");
+
+app.use(
+  "/api/billing",
+  billingRoutes
+);
 // server.js
 
 const labAvailabilityRoutes =
