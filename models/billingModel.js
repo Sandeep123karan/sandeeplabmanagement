@@ -58,7 +58,20 @@ const billingSchema =
         required: true,
 
       },
+tests: [
+  {
+    testName: {
+      type: String,
+      required: true,
+      trim: true
+    },
 
+    testPrice: {
+      type: Number,
+      default: 0
+    }
+  }
+],
 
       // =========================
       // BILLING

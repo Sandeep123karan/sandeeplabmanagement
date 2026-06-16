@@ -28,7 +28,9 @@ app.use(
 // ======================================================
 // PHARMACY AUTH ROUTES
 // ======================================================
-
+app.use( "/api/medicine-categories", require( "./routes/medicineCategoryRoutes" ) );
+app.use( "/api/medicine-subcategories", require( "./routes/medicineSubCategoryRoutes" ) );
+app.use( "/api/medicine-items", require( "./routes/medicineItemRoutes" ) );
 app.use(
   "/api/pharmacy-auth",
   require(
@@ -96,6 +98,10 @@ app.use(
     "./routes/pharmacySettingsRoutes"
   )
 );
+app.use(
+  "/api/categories",
+  require("./routes/categoryRoutes")
+);
 // server.js
 
 const bookingLabRoutes =
@@ -120,12 +126,12 @@ app.use(
 // PHARMACY PRODUCT ROUTES
 // ======================================================
 
-app.use(
-  "/api/pharmacy-products",
-  require(
-    "./routes/pharmacyProductRoutes"
-  )
-);
+// app.use(
+//   "/api/pharmacy-products",
+//   require(
+//     "./routes/pharmacyProductRoutes"
+//   )
+// );
 app.use(
   "/api/pickup-orders",
   require(

@@ -1,237 +1,501 @@
+// const Billing =
+//   require("../models/billingModel");
+
+// const Appointment =
+//   require("../models/appointmentModel");
+
+
+// /* =====================================
+//    CREATE BILL
+// ===================================== */
+
+// exports.createBill =
+//   async (req, res) => {
+
+//     try {
+
+//       const {
+
+//         appointmentId,
+
+//         consultationFee,
+
+//         registrationFee,
+
+//         otherCharges,
+
+//         discount,
+
+//       } = req.body;
+
+
+//       // =========================
+//       // VALIDATION
+//       // =========================
+
+//       if (
+//         !appointmentId
+//       ) {
+
+//         return res.status(400).json({
+
+//           success: false,
+
+//           message:
+//             "Appointment ID required",
+
+//         });
+
+//       }
+
+//       if (
+//         !consultationFee
+//       ) {
+
+//         return res.status(400).json({
+
+//           success: false,
+
+//           message:
+//             "Consultation fee required",
+
+//         });
+
+//       }
+
+
+//       // =========================
+//       // FIND APPOINTMENT
+//       // =========================
+
+//       const appointment =
+//         await Appointment.findOne({
+
+//           _id:
+//             appointmentId,
+
+//           receptionId:
+//             req.user.id,
+
+//         });
+
+//       if (!appointment) {
+
+//         return res.status(404).json({
+
+//           success: false,
+
+//           message:
+//             "Appointment not found",
+
+//         });
+
+//       }
+
+
+//       // =========================
+//       // TOTAL CALCULATION
+//       // =========================
+
+//       const totalAmount =
+
+//         Number(
+//           consultationFee || 0
+//         )
+
+//         +
+
+//         Number(
+//           registrationFee || 0
+//         )
+
+//         +
+
+//         Number(
+//           otherCharges || 0
+//         )
+
+//         -
+
+//         Number(
+//           discount || 0
+//         );
+
+
+//       // =========================
+//       // CREATE BILL
+//       // =========================
+
+//       const bill =
+//         await Billing.create({
+
+//           appointmentId,
+
+//           receptionId:
+//             req.user.id,
+
+//           patientName:
+//             appointment.patientName,
+
+//           patientPhone:
+//             appointment.patientPhone,
+
+//           consultationFee,
+
+//           registrationFee,
+
+//           otherCharges,
+
+//           discount,
+
+//           totalAmount,
+//           paymentStatus: "Paid",
+
+//         });
+
+
+//       // =========================
+//       // RESPONSE
+//       // =========================
+
+//       res.status(201).json({
+
+//         success: true,
+
+//         message:
+//           "Bill created successfully",
+
+//         bill,
+
+//       });
+
+//     } catch (error) {
+
+//       console.log(error);
+
+//       res.status(500).json({
+
+//         success: false,
+
+//         message:
+//           error.message,
+
+//       });
+
+//     }
+
+//   };
+
+
+// /* =====================================
+//    GET ALL BILLS
+// ===================================== */
+
+// exports.getAllBills =
+//   async (req, res) => {
+
+//     try {
+
+//       const bills =
+//         await Billing.find({
+
+//           receptionId:
+//             req.user.id,
+
+//         })
+
+//         .sort({
+
+//           createdAt: -1,
+
+//         });
+
+//       res.status(200).json({
+
+//         success: true,
+
+//         total:
+//           bills.length,
+
+//         bills,
+
+//       });
+
+//     } catch (error) {
+
+//       res.status(500).json({
+
+//         success: false,
+
+//         message:
+//           error.message,
+
+//       });
+
+//     }
+
+//   };
+
+
 const Billing =
-  require("../models/billingModel");
+require("../models/billingModel");
 
 const Appointment =
-  require("../models/appointmentModel");
-
+require("../models/appointmentModel");
 
 /* =====================================
-   CREATE BILL
+CREATE BILL
 ===================================== */
 
 exports.createBill =
-  async (req, res) => {
+async (req, res) => {
 
-    try {
 
-      const {
+try {
 
+  const {
+
+    appointmentId,
+
+    consultationFee,
+
+    registrationFee,
+
+    otherCharges,
+
+    discount,
+
+    tests = []
+
+  } = req.body;
+
+  // =========================
+  // VALIDATION
+  // =========================
+
+  if (!appointmentId) {
+
+    return res.status(400).json({
+
+      success: false,
+
+      message:
+        "Appointment ID required",
+
+    });
+
+  }
+
+  if (
+    consultationFee === undefined
+  ) {
+
+    return res.status(400).json({
+
+      success: false,
+
+      message:
+        "Consultation fee required",
+
+    });
+
+  }
+
+  // =========================
+  // FIND APPOINTMENT
+  // =========================
+
+  const appointment =
+    await Appointment.findOne({
+
+      _id:
         appointmentId,
 
-        consultationFee,
+      receptionId:
+        req.user.id,
 
-        registrationFee,
+    });
 
-        otherCharges,
+  if (!appointment) {
 
-        discount,
+    return res.status(404).json({
 
-      } = req.body;
+      success: false,
 
+      message:
+        "Appointment not found",
 
-      // =========================
-      // VALIDATION
-      // =========================
+    });
 
-      if (
-        !appointmentId
-      ) {
+  }
 
-        return res.status(400).json({
+  // =========================
+  // TESTS TOTAL
+  // =========================
 
-          success: false,
+  const testsAmount =
+    tests.reduce(
 
-          message:
-            "Appointment ID required",
+      (total, item) =>
 
-        });
-
-      }
-
-      if (
-        !consultationFee
-      ) {
-
-        return res.status(400).json({
-
-          success: false,
-
-          message:
-            "Consultation fee required",
-
-        });
-
-      }
-
-
-      // =========================
-      // FIND APPOINTMENT
-      // =========================
-
-      const appointment =
-        await Appointment.findOne({
-
-          _id:
-            appointmentId,
-
-          receptionId:
-            req.user.id,
-
-        });
-
-      if (!appointment) {
-
-        return res.status(404).json({
-
-          success: false,
-
-          message:
-            "Appointment not found",
-
-        });
-
-      }
-
-
-      // =========================
-      // TOTAL CALCULATION
-      // =========================
-
-      const totalAmount =
-
+        total +
         Number(
-          consultationFee || 0
-        )
+          item.testPrice || 0
+        ),
 
-        +
+      0
 
-        Number(
-          registrationFee || 0
-        )
+    );
 
-        +
+  // =========================
+  // TOTAL CALCULATION
+  // =========================
 
-        Number(
-          otherCharges || 0
-        )
+  const totalAmount =
 
-        -
+    Number(
+      consultationFee || 0
+    )
 
-        Number(
-          discount || 0
-        );
+    +
+
+    Number(
+      registrationFee || 0
+    )
+
+    +
+
+    Number(
+      otherCharges || 0
+    )
+
+    +
+
+    Number(
+      testsAmount || 0
+    )
+
+    -
+
+    Number(
+      discount || 0
+    );
+
+  // =========================
+  // CREATE BILL
+  // =========================
+
+  const bill =
+    await Billing.create({
+
+      appointmentId,
+
+      receptionId:
+        req.user.id,
+
+      patientName:
+        appointment.patientName,
+
+      patientPhone:
+        appointment.patientPhone,
+
+      tests,
+
+      consultationFee,
+
+      registrationFee,
+
+      otherCharges,
+
+      discount,
+
+      totalAmount,
+
+      paymentStatus:
+        "Paid",
+
+    });
+
+  // =========================
+  // RESPONSE
+  // =========================
+
+  return res.status(201).json({
+
+    success: true,
+
+    message:
+      "Bill created successfully",
+
+    bill,
+
+  });
+
+} catch (error) {
+
+  console.log(error);
+
+  return res.status(500).json({
+
+    success: false,
+
+    message:
+      error.message,
+
+  });
+
+}
 
 
-      // =========================
-      // CREATE BILL
-      // =========================
-
-      const bill =
-        await Billing.create({
-
-          appointmentId,
-
-          receptionId:
-            req.user.id,
-
-          patientName:
-            appointment.patientName,
-
-          patientPhone:
-            appointment.patientPhone,
-
-          consultationFee,
-
-          registrationFee,
-
-          otherCharges,
-
-          discount,
-
-          totalAmount,
-          paymentStatus: "Paid",
-
-        });
-
-
-      // =========================
-      // RESPONSE
-      // =========================
-
-      res.status(201).json({
-
-        success: true,
-
-        message:
-          "Bill created successfully",
-
-        bill,
-
-      });
-
-    } catch (error) {
-
-      console.log(error);
-
-      res.status(500).json({
-
-        success: false,
-
-        message:
-          error.message,
-
-      });
-
-    }
-
-  };
-
+};
 
 /* =====================================
-   GET ALL BILLS
+GET ALL BILLS
 ===================================== */
 
 exports.getAllBills =
-  async (req, res) => {
+async (req, res) => {
 
-    try {
 
-      const bills =
-        await Billing.find({
+try {
 
-          receptionId:
-            req.user.id,
+  const bills =
+    await Billing.find({
 
-        })
+      receptionId:
+        req.user.id,
 
-        .sort({
+    })
 
-          createdAt: -1,
+    .sort({
 
-        });
+      createdAt: -1,
 
-      res.status(200).json({
+    });
 
-        success: true,
+  return res.status(200).json({
 
-        total:
-          bills.length,
+    success: true,
 
-        bills,
+    total:
+      bills.length,
 
-      });
+    bills,
 
-    } catch (error) {
+  });
 
-      res.status(500).json({
+} catch (error) {
 
-        success: false,
+  return res.status(500).json({
 
-        message:
-          error.message,
+    success: false,
 
-      });
+    message:
+      error.message,
 
-    }
+  });
 
-  };
+}
+
+
+};
