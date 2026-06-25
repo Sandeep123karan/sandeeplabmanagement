@@ -7,14 +7,14 @@ const router = express.Router();
 const {
 
   getAllBookings,
-
+  getAllBookingsForRider,
   getSingleBooking,
-
   acceptBooking,
-
   rejectBooking,
-
   completeBooking,
+
+  riderAcceptBooking,
+  riderRejectBooking,
 
 } = require(
   "../controllers/bookingLabController"
@@ -42,7 +42,15 @@ router.get(
   getAllBookings
 );
 
+// ======================================
+// RIDER GET ALL BOOKINGS
+// NO TOKEN REQUIRED
+// ======================================
 
+router.get(
+  "/all-orders",
+  getAllBookingsForRider
+);
 // ======================================================
 // GET SINGLE BOOKING
 // ======================================================
@@ -89,6 +97,14 @@ router.put(
   laboratoryOnly,
   completeBooking
 );
+router.put(
+  "/rider-accept/:id",
+  riderAcceptBooking
+);
 
+router.put(
+  "/rider-reject/:id",
+  riderRejectBooking
+);
 
 module.exports = router;

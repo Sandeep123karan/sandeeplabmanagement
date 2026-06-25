@@ -1,66 +1,58 @@
-const express =
-  require("express");
 
-const router =
-  express.Router();
 
-const {
+// module.exports =
+//   router;
 
-  getMyPharmacyOrders,
-
-  getSinglePharmacyOrder,
-
-} = require(
-  "../controllers/managementPetOrderController"
-);
+const express = require("express");
+const router = express.Router();
 
 const {
-
-  protect,
-
-  pharmacyOnly,
-
+getMyPharmacyOrders,
+getSinglePharmacyOrder,
+getAllPetOrdersForRider,
+riderRejectPetOrder,
+riderAcceptPetOrder,
 } = require(
-  "../middleware/authMiddleware"
+"../controllers/managementPetOrderController"
 );
 
+const {
+protect,
+pharmacyOnly,
+} = require(
+"../middleware/authMiddleware"
+);
 
-
-// ======================================================
-// GET ALL MY ORDERS
-// ======================================================
-
+// Pharmacy Login Orders
 router.get(
-
-  "/all",
-
-  protect,
-
-  pharmacyOnly,
-
-  getMyPharmacyOrders
-
+"/all",
+protect,
+pharmacyOnly,
+getMyPharmacyOrders
 );
 
-
-
-// ======================================================
-// GET SINGLE ORDER
-// ======================================================
-
+// Rider Orders API
 router.get(
-
-  "/:id",
-
-  protect,
-
-  pharmacyOnly,
-
-  getSinglePharmacyOrder
-
+"/all-orders",
+getAllPetOrdersForRider
 );
 
+// Single Order
+router.get(
+"/:id",
+protect,
+pharmacyOnly,
+getSinglePharmacyOrder
+);
 
+router.put(
+  "/rider-accept/:id",
+  riderAcceptPetOrder
+);
 
-module.exports =
-  router;
+router.put(
+  "/rider-reject/:id",
+  riderRejectPetOrder
+);
+
+module.exports = router;

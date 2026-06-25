@@ -57,6 +57,39 @@ const getAllBookings =
     }
 
 };
+const getAllBookingsForRider =
+async (req, res) => {
+try {
+const bookings =
+await LabBooking.find()
+.populate(
+"user",
+"fullName email phone"
+)
+.sort({
+createdAt: -1,
+});
+
+
+  res.status(200).json({
+    success: true,
+    count: bookings.length,
+    data: bookings,
+  });
+} catch (error) {
+  console.log(
+    "Get All Bookings For Rider Error:",
+    error
+  );
+
+  res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
+
+
+};
 
 
 // ======================================================
@@ -325,6 +358,68 @@ const completeBooking =
 
 };
 
+const riderAcceptBooking = async (req, res) => {
+  try {
+    const booking = await LabBooking.findById(req.params.id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found",
+      });
+    }
+
+    booking.status = "Confirmed";
+
+    if (req.body.riderId) {
+      booking.riderId = req.body.riderId;
+    }
+
+    await booking.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Booking accepted successfully",
+      data: booking,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const riderRejectBooking = async (req, res) => {
+  try {
+    const booking = await LabBooking.findById(req.params.id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found",
+      });
+    }
+
+    booking.status = "Cancelled";
+
+    await booking.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Booking rejected successfully",
+      data: booking,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 
 // ======================================================
 // EXPORTS
@@ -333,6 +428,7 @@ const completeBooking =
 module.exports = {
 
   getAllBookings,
+  getAllBookingsForRider,
 
   getSingleBooking,
 
@@ -341,5 +437,7 @@ module.exports = {
   rejectBooking,
 
   completeBooking,
+   riderAcceptBooking,
+  riderRejectBooking,
 
 };
